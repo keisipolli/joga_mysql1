@@ -19,21 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 const articleRoutes = require('./routes/article')
 app.use('/', articleRoutes)
 app.use('/article', articleRoutes)
+app.use('/author', articleRoutes)
 
-app.get('/author/:author_id', (req, res) => {
-    let query = `select article.id, article.name, article.slug, article.image, article.body, article.published, author.name as author, author.id as author_id from article JOIN author ON article.author_id = author.id where slug = "${req.params.slug}";`
-    let articles = []
-    let author
-    con.query(query, (err, result) => {
-        if (err) throw err
-        articles = result
-        author = result[0]
-        res.render('author', {
-            articles: articles,
-            author: author
-        })
-    })
-})
 
 
 
